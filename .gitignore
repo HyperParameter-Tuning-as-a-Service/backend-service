@@ -1,2 +1,4 @@
 __pycache__
 .vscode
+set_env.sh
+unset_env.sh

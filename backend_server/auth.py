@@ -58,16 +58,15 @@ def callback():
     # Parse the tokens!
     client.parse_request_body_response(json.dumps(token_response.json()))
 
-    # Now that we have tokens (yay) let's find and hit URL
-    # from Google that gives you user's profile information,
-    # including their Google Profile Image and Email
     userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
     uri, headers, body = client.add_token(userinfo_endpoint)
     userinfo_response = requests.get(uri, headers=headers, data=body)
 
     if userinfo_response.json().get("email_verified"):
-        users_email = userinfo_response.json()["email"]
-        session['username'] = users_email
+        user_email = userinfo_response.json()["email"]
+        user_name = userinfo_response.json()["given_name"]
+        session['user_id'] = user_email
+        session['user_name'] = user_name
     else:
         return "User email not available or not verified by Google.", 400
 
