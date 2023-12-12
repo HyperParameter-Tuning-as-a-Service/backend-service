@@ -71,7 +71,7 @@ def callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-    init_minio_new_user(session['user_id'])
+    # init_minio_new_user(session['user_id'])
     return redirect(url_for("index"))
 
 def init_minio_new_user(user_id):
