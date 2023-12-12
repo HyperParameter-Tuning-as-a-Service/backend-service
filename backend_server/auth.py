@@ -2,7 +2,6 @@ from backend_server import app, session, constants, minio_client
 from flask import redirect, url_for
 from flask import request as flask_request
 import json
-import hashlib
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
@@ -71,11 +70,11 @@ def callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-    # init_minio_new_user(session['user_id'])
+    init_minio_new_user(session['user_id'])
     return redirect(url_for("index"))
 
 def init_minio_new_user(user_id):
-    user_bucket = hashlib.sha256(user_id.encode())
+    user_bucket = f'{user_id.replace("@",".")}.bucket'
     if minio_client.bucket_exists(user_bucket):
         return
     minio_client.make_bucket(user_bucket)

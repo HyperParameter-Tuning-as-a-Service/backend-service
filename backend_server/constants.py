@@ -9,8 +9,8 @@ GOOGLE_DISCOVERY_URL =  "https://accounts.google.com/.well-known/openid-configur
 
 
 minioHost = os.getenv("MINIO_HOST") or "localhost:9000"
-minioUser = os.getenv("MINIO_USER") or "rootuser"
-minioPasswd = os.getenv("MINIO_PASSWD") or "rootpass123"
+minioUser = os.getenv("MINIO_USER") or "minioadmin"
+minioPasswd = os.getenv("MINIO_PASSWD") or "minioadmin"
 
 
 ALLOWED_EXTENSIONS = ['csv']
