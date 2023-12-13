@@ -70,12 +70,5 @@ def callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-    init_minio_new_user(session['user_id'])
     return redirect(url_for("index"))
 
-def init_minio_new_user(user_id):
-    user_bucket = f'{user_id.replace("@",".")}.bucket'
-    if minio_client.bucket_exists(user_bucket):
-        return
-    minio_client.make_bucket(user_bucket)
-    return

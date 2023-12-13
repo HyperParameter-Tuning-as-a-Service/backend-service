@@ -19,3 +19,4 @@ minioPasswd = os.getenv("MINIO_PASSWD") or "minioadmin"
 KAFKA_USERNAME = os.getenv("KAFKA_USERNAME")
 KAFKA_SECRET = os.getenv("KAFKA_SECRET")
 KAFKA_BOOTSTRAP_SERVER = "pkc-4r087.us-west2.gcp.confluent.cloud"
+KAFKA_SUBMIT_JOB_TOPIC = 'demo'

@@ -12,5 +12,11 @@ kafka_producer_config = {
 
 producer = Producer(kafka_producer_config)
 
-def push_to_topic():
-    pass
+def delivery_callback(err, msg):
+        if err:
+            print(f'ERROR: Message failed delivery: {err}')
+        else:
+            print(f'Produced event to topic {msg.topic()} value = {msg.value().decode("utf-8")}')
+
+def push_to_topic(value):
+    producer.produce(constants.KAFKA_SUBMIT_JOB_TOPIC, value=value, callback=delivery_callback)
