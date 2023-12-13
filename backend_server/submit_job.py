@@ -65,6 +65,6 @@ def submit_training_job():
         for j, hyp_name in enumerate(valid_hp_keys):
             train_meta_data['hyperparams'][hyp_name] = hyp_comb[j]
         kafka.push_to_topic(json.dumps(train_meta_data))   
-        mongo.record_train_meta_data(session.get('user-id'), train_meta_data, exp_name)        
+        mongo.record_train_meta_data(session.get('user-id'), train_meta_data, exp_name)  
 
     return jsonify({'message':msg}), 200

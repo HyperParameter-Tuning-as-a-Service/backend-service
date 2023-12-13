@@ -23,4 +23,5 @@ KAFKA_SUBMIT_JOB_TOPIC = 'demo'
 
 
 # Mongo configs
-MONGO_ATLAS_URL = os.getenv("MONGO_ATLAS_URL")
+MONGO_ATLAS_SECRET = os.getenv("MONGO_ATLAS_SECRET")
+MONGO_CONNECTION = f'mongodb+srv://HypTAASuser:{MONGO_ATLAS_SECRET}@hyptaas.wqjqmye.mongodb.net/?retryWrites=true&w=majority'
