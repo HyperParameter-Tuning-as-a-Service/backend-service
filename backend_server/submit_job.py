@@ -62,6 +62,7 @@ def submit_training_job():
         train_meta_data['model_name'] = model_name
         train_meta_data['dataset'] = secure_filename(file.filename)
         train_meta_data['hyperparams'] = dict()
+        train_meta_data['minio_bucket'] = minio.get_user_bucket_name(session.get('user-id'))
         for j, hyp_name in enumerate(valid_hp_keys):
             train_meta_data['hyperparams'][hyp_name] = hyp_comb[j]
         kafka.push_to_topic(json.dumps(train_meta_data))   
