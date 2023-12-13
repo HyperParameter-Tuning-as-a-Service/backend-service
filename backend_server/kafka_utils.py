@@ -20,3 +20,5 @@ def delivery_callback(err, msg):
 
 def push_to_topic(value):
     producer.produce(constants.KAFKA_SUBMIT_JOB_TOPIC, value=value, callback=delivery_callback)
+    producer.poll(10000)
+    producer.flush()

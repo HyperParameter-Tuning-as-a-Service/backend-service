@@ -11,9 +11,7 @@ except Exception as exp:
     print(f'Exception raised in while starting minio: {str(exp)}')
 
 def get_user_bucket_name(user_id):
-    m = hashlib.sha256()
-    m.update(user_id.encode())
-    return m.hexdigest()
+    return f'{user_id.replace("@",".")}'
 
 def prepare_user_bucket(user_bucket_name):
     if minio_client.bucket_exists(user_bucket_name):

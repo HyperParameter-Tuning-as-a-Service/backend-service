@@ -1,4 +1,4 @@
-from backend_server import app, session, constants, minio_client
+from backend_server import app, session, constants
 from flask import redirect, url_for
 from flask import request as flask_request
 import json
