@@ -10,6 +10,7 @@ kafka_producer_config = {
     'sasl.password': constants.KAFKA_SECRET
 }
 
-def get_kafka_producer():
-    producer = Producer(kafka_producer_config)
-    return producer
+producer = Producer(kafka_producer_config)
+
+def push_to_topic():
+    pass
