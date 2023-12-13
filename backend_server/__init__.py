@@ -10,4 +10,4 @@ app = Flask(__name__)
 app.secret_key = constants.FLASK_SECRET
 CORS(app)
 
-from backend_server import home, auth, submit_job
+from backend_server import home, auth, submit_job, prev_runs

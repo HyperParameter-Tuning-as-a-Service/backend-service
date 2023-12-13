@@ -27,7 +27,6 @@ def find_or_create_exp_doc(user_id, exp_name):
             }}
         )
 
-
 def record_train_meta_data(user_id, train_meta_data, exp_name):
     find_or_create_user_doc(user_id)
     find_or_create_exp_doc(user_id, exp_name)
@@ -41,4 +40,8 @@ def record_train_meta_data(user_id, train_meta_data, exp_name):
         }}
     )
 
+def get_all_runs(user_id):
+    user_doc = mongo_collection.find_one({'user_id': user_id})
+    runs = user_doc.get('runs')
+    return runs
 
