@@ -1,5 +1,5 @@
 from backend_server import app, session, mongo
-from flask import request, redirect, url_for, jsonify
+from flask import redirect, url_for, jsonify
 
 def best_runs_all(runs):
     best_runs = dict()
