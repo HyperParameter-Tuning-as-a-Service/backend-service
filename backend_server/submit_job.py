@@ -1,4 +1,4 @@
-from backend_server import app, session, constants, minio_utils, kafka_utils
+from backend_server import app, session, constants, minio, kafka, mongo
 from werkzeug.utils import secure_filename
 from flask import request, redirect, url_for, jsonify
 from itertools import product
@@ -40,7 +40,7 @@ def submit_training_job():
         return jsonify({'message':msg}), 400
     
     file = request.files['user_file']
-    minio_utils.upload_dataset(session.get('user-id'), file)
+    minio.upload_dataset(session.get('user-id'), file)
     
     exp_name = request.form.get('exp_name')
     task_type = request.form.get('task_type')
@@ -56,14 +56,15 @@ def submit_training_job():
     hyp_combs = list(product(*valid_hps))
 
     for i, hyp_comb in enumerate(hyp_combs):
-        kafka_message = dict()
-        kafka_message['exp_id'] = f'{exp_name}_{i}'
-        kafka_message['task_type'] = task_type
-        kafka_message['model_name'] = model_name
-        kafka_message['dataset'] = secure_filename(file.filename)
+        train_meta_data = dict()
+        train_meta_data['exp_id'] = f'{exp_name}_{i}'
+        train_meta_data['task_type'] = task_type
+        train_meta_data['model_name'] = model_name
+        train_meta_data['dataset'] = secure_filename(file.filename)
+        train_meta_data['hyperparams'] = dict()
         for j, hyp_name in enumerate(valid_hp_keys):
-            kafka_message[hyp_name] = hyp_comb[j]
-        kafka_utils.push_to_topic(json.dumps(kafka_message))   
-    
+            train_meta_data['hyperparams'][hyp_name] = hyp_comb[j]
+        kafka.push_to_topic(json.dumps(train_meta_data))   
+        mongo.record_train_meta_data(session.get('user-id'), train_meta_data, exp_name)        
 
     return jsonify({'message':msg}), 200
