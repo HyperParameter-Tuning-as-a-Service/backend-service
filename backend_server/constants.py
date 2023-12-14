@@ -23,7 +23,10 @@ KAFKA_BOOTSTRAP_SERVER = "pkc-4r087.us-west2.gcp.confluent.cloud"
 # KAFKA_SUBMIT_JOB_TOPIC = 'demo'
 KAFKA_SUBMIT_JOB_TOPIC = 'submit_job'
 
-
 # Mongo configs
 MONGO_ATLAS_SECRET = os.getenv("MONGO_ATLAS_SECRET")
 MONGO_CONNECTION = f'mongodb+srv://HypTAASuser:{MONGO_ATLAS_SECRET}@hyptaas.wqjqmye.mongodb.net/?retryWrites=true&w=majority'
+
+# Redis configs
+REDISHOST = os.getenv("REDISTOGO_URL") or "localhost"
+REDISPORT = os.getenv("REDISTOGO_PORT") or 6379
