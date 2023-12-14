@@ -47,7 +47,7 @@ def submit_training_job():
     
     train_file = request.files['train_user_file']
     test_file = request.files['test_user_file']
-    # file = request.files['test_user_file']
+
     minio.upload_dataset(session.get('user-id'), train_file)
     minio.upload_dataset(session.get('user-id'), test_file)
     
@@ -73,9 +73,11 @@ def submit_training_job():
         train_meta_data['test_dataset'] = secure_filename(test_file.filename)
         train_meta_data['hyperparams'] = dict()
         train_meta_data['minio_bucket'] = minio.get_user_bucket_name(session.get('user-id'))
+        train_meta_data['user_id'] = session.get('user-id')
         for j, hyp_name in enumerate(valid_hp_keys):
             train_meta_data['hyperparams'][hyp_name] = hyp_comb[j]
-        kafka.push_to_topic(json.dumps(train_meta_data))   
+        kafka.push_to_topic(json.dumps(train_meta_data)) 
+        train_meta_data.pop('user_id')  
         mongo.record_train_meta_data(session.get('user-id'), train_meta_data, exp_name)  
 
     return jsonify({'message':msg}), 200
