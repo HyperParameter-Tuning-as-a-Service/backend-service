@@ -2,3 +2,5 @@ __pycache__
 .vscode
 set_env.sh
 unset_env.sh
+backend_server/models
+backend_server/temp
