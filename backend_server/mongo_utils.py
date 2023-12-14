@@ -46,3 +46,12 @@ def get_all_runs(user_id):
     runs = user_doc.get('runs')
     return runs
 
+def get_job_details(user_id, exp_name, exp_id):
+    exp_filter_key = f'runs.{exp_name}.exp_id'
+    exp_doc = mongo_collection.find_one(
+        {'user_id': user_id, exp_filter_key:exp_id}
+    )
+    for trial in exp_doc['runs'][exp_name]:
+        if trial.get('exp_id') == exp_id:
+            return trial
+    return None

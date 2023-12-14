@@ -4,6 +4,7 @@ import secrets
 # Flask configs
 FLASK_SECRET = os.getenv('FLASK_SECRET') or secrets.token_hex()
 ALLOWED_EXTENSIONS = ['csv']
+MODEL_SAVE_FOLDER = 'models'
 
 # Google Oauth configs
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")

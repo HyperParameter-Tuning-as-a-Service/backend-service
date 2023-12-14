@@ -25,3 +25,6 @@ def upload_dataset(user_id, file):
     user_bucket = get_user_bucket_name(user_id)
     size = os.fstat(file.fileno()).st_size
     minio_client.put_object(user_bucket, f'datasets/{filename}', file, size)
+
+def download_model_file(bucket, object_name, file_path):
+    minio_client.fget_object(bucket, object_name, file_path)
