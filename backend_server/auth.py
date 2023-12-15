@@ -1,5 +1,5 @@
 from backend_server import app, session, constants
-from flask import redirect, url_for
+from flask import redirect, url_for, jsonify
 from flask import request as flask_request
 import json
 from oauthlib.oauth2 import WebApplicationClient
@@ -9,6 +9,14 @@ client = WebApplicationClient(constants.GOOGLE_CLIENT_ID)
 
 def get_google_provider_cfg():
     return requests.get(constants.GOOGLE_DISCOVERY_URL).json()
+
+@app.route('/auth', methods=['GET'])
+def auth():
+    session['user_id'] = flask_request.args.get('user-id')
+    data = {'user_id': session['user_id'],
+                'logged_in': True}
+    return jsonify(data), 200
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

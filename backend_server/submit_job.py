@@ -39,7 +39,7 @@ def submit_job_paylod_validator(req):
 @app.route('/submit-job', methods=['POST'])
 def submit_training_job():
     if 'user-id' not in session:
-        return redirect(url_for("index"))
+        session['user-id'] = request.form.get('user-id')
     
     msg, is_payload_valid = submit_job_paylod_validator(request)
     if not is_payload_valid:

@@ -1,12 +1,12 @@
 from backend_server import app, session, mongo, minio, constants
-from flask import redirect, url_for, jsonify, send_file
+from flask import redirect, url_for, jsonify, send_file, request
 import os
 import shutil
 
 @app.route('/download-model/<expid>', methods=['GET'])
 def download_model(expid):
     if 'user-id' not in session:
-        return redirect(url_for("index"))
+        session['user-id'] = request.args.get('user-id')
     
     clean_up()
     exp_name = '_'.join(expid.split('_')[:-1])

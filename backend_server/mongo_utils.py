@@ -43,8 +43,10 @@ def record_train_meta_data(user_id, train_meta_data, exp_name):
 
 def get_all_runs(user_id):
     user_doc = mongo_collection.find_one({'user_id': user_id})
-    runs = user_doc.get('runs')
-    return runs
+    if user_doc is not None:
+        runs = user_doc.get('runs')
+        return runs
+    return {}
 
 def get_job_details(user_id, exp_name, exp_id):
     exp_filter_key = f'runs.{exp_name}.exp_id'
